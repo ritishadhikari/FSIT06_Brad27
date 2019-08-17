@@ -2,6 +2,7 @@ package tw.org.iii.appps.brad27;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -23,8 +24,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void insert(View view) {
-        String sql = "INSERT INTO cust (cname,birthday) VALUES ('Brad', '1999-01-02')";
-        database.execSQL(sql);
+        //String sql = "INSERT INTO cust (cname,birthday) VALUES ('Brad', '1999-01-02')";
+        //database.execSQL(sql);
+
+        ContentValues values = new ContentValues();
+        values.put("cname", "Eric");
+        values.put("birthday", "1999-02-03");
+        database.insert("cust",null,values);
 
         query(null);
     }
