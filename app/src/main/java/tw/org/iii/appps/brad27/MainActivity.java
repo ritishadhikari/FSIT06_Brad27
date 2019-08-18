@@ -36,17 +36,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void delete(View view) {
-
+        // delete from cust where id = 3 and cname = 'Eric'
+        database.delete("cust", "id = ? and cname = ?",
+                new String[]{"3","Eric"});
+        query(null);
     }
 
     public void update(View view) {
-
+        // update cust set cname='Brad', birthday='1999-02-03' where id=4;
+        ContentValues values = new ContentValues();
+        values.put("cname", "Brad");
+        values.put("birthday", "1999-02-03");
+        database.update("cust",values, "id=?", new String[]{"4"});
     }
 
     public void query(View view) {
         //String sql = "SELECT * FROM cust";
-        Cursor cursor = database.query("cust", null, null,null,
-                null,null,null);
+        Cursor cursor = database.query("cust", new String[]{"id","cname","birthday"},
+                "cname like ?",new String[]{"B%"},
+                null,null,
+                null);
+        if (cursor != null){
+            while (cursor.moveToNext()){
+                String id = cursor.getString(cursor.getColumnIndex("id"));
+                String cname = cursor.getString(cursor.getColumnIndex("cname"));
+                String birthday = cursor.getString(cursor.getColumnIndex("birthday"));
+                Log.v("brad", id + ":" + cname + ":" + birthday);
+            }
+        }
+        Log.v("brad", "-----");
+        //----------------
+        cursor = database.rawQuery(
+                "select * from cust where id in (select id from cust where cname=?)",
+                new String[]{"Eric"});
         if (cursor != null){
             while (cursor.moveToNext()){
                 String id = cursor.getString(cursor.getColumnIndex("id"));
