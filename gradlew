@@ -19,6 +19,7 @@ while [ -h "$PRG" ] ; do
         PRG=`dirname "$PRG"`"/$link"
     fi
 done
+#Why are you adding this?
 SAVED="`pwd`"
 cd "`dirname \"$PRG\"`/" >/dev/null
 APP_HOME="`pwd -P`"
